@@ -5,8 +5,24 @@ const app = express();
 let hbs = require('express-hbs');
 const port = process.env.NODE_ENV || 9001;
 
-// Set static content.
-app.use('/', express.static(__dirname + '/public'));
+function allowCrossDomain(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    	
+    next();
+}
+
+function setStaticResourceHeaders(res, path) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+}
+
+// Set static content and open CORS configs.
+app.use('/', express.static(__dirname + '/public', {
+  setHeaders: setStaticResourceHeaders
+}));
 
 // Set view template engine for file extension server.view.html
 app.engine('server.view.html', hbs.express4({
@@ -19,16 +35,8 @@ app.set('view engine', 'server.view.html');
 // Set views folder
 app.set('views', __dirname + '/app/views');
 
-function allowCrossDomain(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    	
-    next();
-}
-
 // Need do that for CORS request from plugin container server.
-app.use(allowCrossDomain);
+app.use('*', allowCrossDomain);
 
 app.use('/', function renderIndexPage(req, res) {
   res.render('index', {
