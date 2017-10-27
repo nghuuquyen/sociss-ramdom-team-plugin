@@ -19,6 +19,17 @@ app.set('view engine', 'server.view.html');
 // Set views folder
 app.set('views', __dirname + '/app/views');
 
+function allowCrossDomain(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'example.com');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+
+// Need do that for CORS request from plugin container server.
+app.use(allowCrossDomain);
+
 app.use('/', function renderIndexPage(req, res) {
   res.render('index', {
     host : req.protocol + '://' + req.get('host')
