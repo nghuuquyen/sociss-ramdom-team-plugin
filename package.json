@@ -1,0 +1,22 @@
+{
+  "name": "ramdom-team",
+  "version": "1.0.0",
+  "description": "Input user in class and ramdom all user into many team",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "sociss",
+    "class",
+    "education",
+    "ramdom",
+    "team"
+  ],
+  "author": "Quyen Nguyen Huu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-hbs": "^1.0.4"
+  }
+}
