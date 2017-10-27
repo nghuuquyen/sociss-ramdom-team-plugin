@@ -20,7 +20,9 @@ app.set('view engine', 'server.view.html');
 app.set('views', __dirname + '/app/views');
 
 app.use('/', function renderIndexPage(req, res) {
-  res.render('index');
+  res.render('index', {
+    host : req.protocol + '://' + req.get('host')
+  });
 });
 
 // catch 404 and forward to error handler
