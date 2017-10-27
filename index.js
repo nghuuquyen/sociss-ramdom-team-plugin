@@ -6,7 +6,7 @@ let hbs = require('express-hbs');
 const port = process.env.NODE_ENV || 9001;
 
 // Set static content.
-app.use('/', express.static('./public'));
+app.use('/', express.static(__dirname + '/public'));
 
 // Set view template engine for file extension server.view.html
 app.engine('server.view.html', hbs.express4({
@@ -17,7 +17,7 @@ app.engine('server.view.html', hbs.express4({
 app.set('view engine', 'server.view.html');
 
 // Set views folder
-app.set('views', './app/views');
+app.set('views', __dirname + '/app/views');
 
 app.use('/', function renderIndexPage(req, res) {
   res.render('index');
